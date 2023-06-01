@@ -24,8 +24,8 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
         {{#each restaurants}}
-        <a href="/restaurants/{{this.id}}" class="text-secondary" style="text-decoration:none">
-          <div class="card mb-3">
+        <div class="d-flex-column mb-3">
+          <div class="card mb-1">
             <img class="card-img-top" src="{{this.image}}"
               alt="Sababa 沙巴巴中東美食">
             <div class="card-body p-3">
@@ -39,7 +39,15 @@
               </div>
             </div>
           </div>
-        </a>
+          <div class="button-zone d-flex justify-content-end align-items-center" style="height:20px">
+            <a href="/restaurants/{{this._id}}/edit" style="text-decoration:none;font-size:7px; padding: 0 1px;" class="border border-dark rounded" >edit</a>
+            <a href="/restaurants/{{this._id}}" style="text-decoration:none;font-size:7px; margin-left:2px; padding: 0 1px;" class=" border border-dark rounded">detail</a>
+            <form action="/restaurants/{{this._id}}/delete" method="POST" style="margin-left:2px;">
+              <button type="submit" class=" border border-dark rounded" style="text-decoration:none;font-size:7px;">delete</button>
+            </form>
+          </div>
+        </div>
+        
         {{/each}}
       </div>
     </div>
