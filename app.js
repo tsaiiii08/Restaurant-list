@@ -69,13 +69,46 @@ app.post('/restaurants',(req,res)=>{
 //瀏覽特定餐廳細節
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  console.log(id)
   return Restaurant.findById(id)
     .lean()
-    .then(restaurant => (res.render('show', { restaurant })))
+    .then((restaurant) => res.render('show', { restaurant })) 
     .catch(error => console.log('error is on read specific data'))
 })
 
+//瀏覽編輯頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(error => console.log('error is on read specific data for edit'))
+})
+//編輯餐廳內容
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const image = req.body.image
+  const name = req.body.name
+  const category = req.body.category
+  const rating = req.body.rating
+  const location = req.body.location
+  const google_map = req.body.google_map
+  const phone = req.body.phone
+  const description = req.body.description
+  return Restaurant.findById(id)
+  .then(restaurant=>{
+    restaurant.image =  image
+    restaurant.name = name
+    restaurant.category = category
+    restaurant.rating = rating
+    restaurant.location = location
+    restaurant.google_map = google_map
+    restaurant.phone = phone
+    restaurant.description = description
+    return restaurant.save()
+  })
+  .then(() => res.redirect(`/restaurants/${id}`))
+  .catch(error => console.log('error is on edit data'))
+})
 //搜尋餐廳
 app.get('/search', (req, res) => {
   console.log(req.query.keyword)

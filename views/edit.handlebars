@@ -1,0 +1,22 @@
+<div class="d-flex flex-column align-items-center
+ justify-content-center">
+  <div class="d-flex justify-content-end mt-3 me-5" style="width:100%">
+<a href="/" style="text-decoration:none;padding: 3px;"
+              class="border border-dark rounded">回到首頁</a>
+  </div>
+  <form action="/restaurants/{{restaurant._id}}/edit" method="POST" class="d-flex flex-column mb-4 mt-4" style="width:200px;">
+    <input type="text" placeholder="name" name="name" value="{{restaurant.name}}" class="mb-1">
+    <input type="text" placeholder="image-link" name="image" value="{{restaurant.image}}" class="mb-1">
+    <input type="text" placeholder="category" name="category" value="{{restaurant.category}}" class="mb-1">
+    <input type="text" placeholder="rating" name="rating"value="{{restaurant.rating}}" class="mb-1">
+    <input type="text" placeholder="phone" name="phone" value="{{restaurant.phone}}" class="mb-1">
+    <input type="text" placeholder="location" name="location" value="{{restaurant.location}}" class="mb-1">
+    <input type="text" placeholder="google_map" name="google_map"value="{{restaurant.google_map}}" class="mb-1">
+    <input type="text" placeholder="description" name="description" value="{{restaurant.description}}" class="mb-1">
+    <div class="d-flex justify-content-end">
+      <button type="submit" style="width:100px;">Save</button>
+    </div>
+   
+
+  </form>
+</div>
