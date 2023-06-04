@@ -43,15 +43,15 @@
               </div>
             </div>
           </div>
-          <div class="button-zone d-flex justify-content-end align-items-center" style="height:20px">
-            <a href="./restaurants/{{this._id}}/edit" style="text-decoration:none;font-size:7px; padding: 0 1px;"
-              class="border border-dark rounded">edit</a>
+          <div class="button-zone d-flex justify-content-end align-items-start" style="height:20px">
             <a href="./restaurants/{{this._id}}"
-              style="text-decoration:none;font-size:7px; margin-left:2px; padding: 0 1px;"
-              class=" border border-dark rounded">detail</a>
-            <form action="./restaurants/{{this._id}}/delete" method="POST" style="margin-left:2px;">
-              <button type="submit" class=" border border-dark rounded"
-                style="text-decoration:none;font-size:7px;">delete</button>
+              style="text-decoration:none;font-size:10px; padding: 0 1px;"
+              class=" border border-dark rounded">詳細內容</a>
+            <a href="./restaurants/{{this._id}}/edit" style="margin-left:3px; text-decoration:none;font-size:10px; padding: 0 1px;"
+              class="border border-dark rounded">編輯</a>
+            <form action="./restaurants/{{this._id}}/delete" method="POST" style="height:20px; margin-left:3px;" class="d-inline-flex">
+              <button type="submit" class="border border-dark rounded"
+                style=" text-decoration:none;font-size:10px; padding: 0 1px;">刪除</button>
             </form>
           </div>
         </div>

@@ -52,7 +52,7 @@ app.post('/restaurants',(req,res)=>{
   const google_map = req.body.google_map
   const phone = req.body.phone
   const description = req.body.description
-  return Restaurant.create({
+   return Restaurant.create({
     image: image,
     name: name,
     category: category,
@@ -61,9 +61,9 @@ app.post('/restaurants',(req,res)=>{
     google_map:google_map,
     phone: phone,
     description: description,
-  })
-  .then(() => res.redirect('/')) 
-  .catch(error => console.log('error is on add data'))
+    })
+    .then(() => res.redirect('/')) 
+    .catch(error => console.log('error is on add data')) 
 })
 
 //瀏覽特定餐廳細節
@@ -108,6 +108,15 @@ app.post('/restaurants/:id/edit', (req, res) => {
   })
   .then(() => res.redirect(`/restaurants/${id}`))
   .catch(error => console.log('error is on edit data'))
+})
+
+// 刪除餐廳
+app.post('/restaurants/:id/delete',(req,res)=>{
+  const id = req.params.id
+  return Restaurant.findByIdAndRemove(id)
+  .then(()=> res.redirect('/'))
+  .catch(error => console.log('error is on delete data'))
+
 })
 //搜尋餐廳
 app.get('/search', (req, res) => {
