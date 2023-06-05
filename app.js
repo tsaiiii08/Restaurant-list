@@ -1,7 +1,9 @@
 const express = require('express')
-const app = express()
 const exphbs = require('express-handlebars')
 const port = 3000
+const methodOverride = require('method-override')
+const Restaurant = require('./models/restaurant')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 if (process.env.NODE_ENV !== 'produciton') {
   require('dotenv').config()
@@ -16,8 +18,10 @@ db.once('open', () => {
   console.log('db is connected')
 })
 
-const Restaurant = require('./models/restaurant')
-const bodyParser = require('body-parser')
+const app = express()
+
+app.use(methodOverride('_method'))
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
@@ -84,7 +88,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log('error is on read specific data for edit'))
 })
 //編輯餐廳內容
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const image = req.body.image
   const name = req.body.name
@@ -111,7 +115,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 // 刪除餐廳
-app.post('/restaurants/:id/delete',(req,res)=>{
+app.delete('/restaurants/:id',(req,res)=>{
   const id = req.params.id
   return Restaurant.findByIdAndRemove(id)
   .then(()=> res.redirect('/'))

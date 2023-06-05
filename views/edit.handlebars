@@ -4,7 +4,7 @@
 <a href="/" style="text-decoration:none;padding: 3px;"
               class="border border-dark rounded">回到首頁</a>
   </div>
-  <form action="/restaurants/{{restaurant._id}}/edit" method="POST" class="d-flex flex-column mb-4 mt-4" style="width:200px;">
+  <form action="/restaurants/{{restaurant._id}}/?_method=PUT" method="POST" class="d-flex flex-column mb-4 mt-4" style="width:200px;">
     <input type="text" placeholder="name" name="name" value="{{restaurant.name}}" class="mb-1">
     <input type="text" placeholder="image-link" name="image" value="{{restaurant.image}}" class="mb-1">
     <input type="text" placeholder="category" name="category" value="{{restaurant.category}}" class="mb-1">

@@ -3,7 +3,7 @@
   <div class=" d-flex justify-content-end mb-2"> 
     <a href="/restaurants/{{restaurant._id}}/edit" style="text-decoration:none; padding: 3px;"
               class=" border border-dark rounded">修改餐廳內容</a>
-    <form action="/restaurants/{{restaurant._id}}/delete" method="POST" style="margin-left:2px;">
+    <form action="/restaurants/{{restaurant._id}}/?_method=DELETE" method="POST" style="margin-left:2px;">
       <button type="submit" class=" border border-dark rounded ms-2" style="text-decoration:none;padding: 3px;">刪除此餐廳</button>
     </form>
   </div>
