@@ -4,6 +4,7 @@ const port = 3000
 const methodOverride = require('method-override')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
+const cheerio = require('cheerio')
 const mongoose = require('mongoose')
 if (process.env.NODE_ENV !== 'produciton') {
   require('dotenv').config()
@@ -37,9 +38,53 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
-    .sort({ _id: 'asc' })
+    .sort({ category: 'asc' })
     .then(restaurants => res.render('index', { restaurants }))
     .catch(error => console.log('error is on read all data'))
+})
+
+//瀏覽特定方法排列後的所有餐廳
+app.get('/restaurants/sort/:sortMethod', (req, res) => {
+  const sortMethod = req.params.sortMethod
+  let sortSequence = 'asc'
+  if (sortMethod === 'nameAsc') {
+    Restaurant.find()
+      .lean()
+      .sort({ name: sortSequence })
+      .then(restaurants => res.render('index', { restaurants }))
+      .catch(error => console.log('error is on read all data'))
+  }
+  else if (sortMethod === 'nameDesc') {
+    sortSequence = 'desc'
+    Restaurant.find()
+      .lean()
+      .sort({ name: sortSequence })
+      .then(restaurants => res.render('index', { restaurants }))
+      .catch(error => console.log('error is on read all data'))
+
+  }
+  else if (sortMethod === 'category') {
+    Restaurant.find()
+      .lean()
+      .sort({ category: sortSequence })
+      .then(restaurants => res.render('index', { restaurants }))
+      .catch(error => console.log('error is on read all data'))
+  }
+  else if (sortMethod === 'location') {
+    Restaurant.find()
+      .lean()
+      .sort({ location: sortSequence })
+      .then(restaurants => res.render('index', { restaurants }))
+      .catch(error => console.log('error is on read all data'))
+  }
+  else if (sortMethod === 'rating') {
+    sortSequence = 'desc'
+    Restaurant.find()
+      .lean()
+      .sort({ rating: sortSequence })
+      .then(restaurants => res.render('index', { restaurants }))
+      .catch(error => console.log('error is on read all data'))
+  }
 })
 
 //新增餐廳頁面的路由設定
@@ -48,7 +93,7 @@ app.get('/restaurants/new', (req, res) => {
 })
 
 //接收欲新增內容並送往資料庫的路由
-app.post('/restaurants',(req,res)=>{
+app.post('/restaurants', (req, res) => {
   const image = req.body.image
   const name = req.body.name
   const category = req.body.category
@@ -57,18 +102,18 @@ app.post('/restaurants',(req,res)=>{
   const google_map = req.body.google_map
   const phone = req.body.phone
   const description = req.body.description
-   return Restaurant.create({
+  return Restaurant.create({
     image: image,
     name: name,
     category: category,
     rating: rating,
     location: location,
-    google_map:google_map,
+    google_map: google_map,
     phone: phone,
     description: description,
-    })
-    .then(() => res.redirect('/')) 
-    .catch(error => console.log('error is on add data')) 
+  })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log('error is on add data'))
 })
 
 //瀏覽特定餐廳細節
@@ -76,7 +121,7 @@ app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
-    .then((restaurant) => res.render('show', { restaurant })) 
+    .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => console.log('error is on read specific data'))
 })
 
@@ -100,27 +145,27 @@ app.put('/restaurants/:id', (req, res) => {
   const phone = req.body.phone
   const description = req.body.description
   return Restaurant.findById(id)
-  .then(restaurant=>{
-    restaurant.image =  image
-    restaurant.name = name
-    restaurant.category = category
-    restaurant.rating = rating
-    restaurant.location = location
-    restaurant.google_map = google_map
-    restaurant.phone = phone
-    restaurant.description = description
-    return restaurant.save()
-  })
-  .then(() => res.redirect(`/restaurants/${id}`))
-  .catch(error => console.log('error is on edit data'))
+    .then(restaurant => {
+      restaurant.image = image
+      restaurant.name = name
+      restaurant.category = category
+      restaurant.rating = rating
+      restaurant.location = location
+      restaurant.google_map = google_map
+      restaurant.phone = phone
+      restaurant.description = description
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log('error is on edit data'))
 })
 
 // 刪除餐廳
-app.delete('/restaurants/:id',(req,res)=>{
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findByIdAndRemove(id)
-  .then(()=> res.redirect('/'))
-  .catch(error => console.log('error is on delete data'))
+    .then(() => res.redirect('/'))
+    .catch(error => console.log('error is on delete data'))
 
 })
 //搜尋餐廳

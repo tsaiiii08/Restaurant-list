@@ -1,6 +1,6 @@
 <!-- ./views/index.handlebars -->
 <!-- search bar -->
-<div class="container d-flex justify-content-between">
+<div class="d-flex justify-content-between">
   <div class="container search-bar">
     <div class="search-bar-outer">
       <div class="search-bar-inner">
@@ -17,9 +17,22 @@
       </div>
     </div>
   </div>
-  <a href="/restaurants/new" class="d-inline-block align-top"
-    style="text-decoration:none; color:gray; width:100px;">新增餐廳</a>
+  <div class="dropdown" style="margin-right:10px">
+    <button class="btn btn-major ml-1 dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+      aria-expanded="false" style="width:100px"> 排列
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+      <li><a class="dropdown-item" href="/restaurants/sort/nameAsc">名稱從A到Z</a></li>
+      <li><a class="dropdown-item" href="/restaurants/sort/nameDesc">名稱從Z到A</a></li>
+      <li><a class="dropdown-item" href="/restaurants/sort/category">餐廳分類</a></li>
+      <li><a class="dropdown-item" href="/restaurants/sort/location">餐廳位置</a></li>
+      <li><a class="dropdown-item" href="/restaurants/sort/rating">餐廳分數</a></li>
+    </ul>
+  </div>
 </div>
+
+
+
 
 <!-- restaurant list -->
 <div class="container mt-5">
@@ -44,12 +57,13 @@
             </div>
           </div>
           <div class="button-zone d-flex justify-content-end align-items-start" style="height:20px">
-            <a href="./restaurants/{{this._id}}"
-              style="text-decoration:none;font-size:10px; padding: 0 1px;"
+            <a href="./restaurants/{{this._id}}" style="text-decoration:none;font-size:10px; padding: 0 1px;"
               class=" border border-dark rounded">詳細內容</a>
-            <a href="./restaurants/{{this._id}}/edit" style="margin-left:3px; text-decoration:none;font-size:10px; padding: 0 1px;"
+            <a href="./restaurants/{{this._id}}/edit"
+              style="margin-left:3px; text-decoration:none;font-size:10px; padding: 0 1px;"
               class="border border-dark rounded">編輯</a>
-            <form action="./restaurants/{{this._id}}/?_method=DELETE" method="POST" style="height:20px; margin-left:3px;" class="d-inline-flex">
+            <form action="./restaurants/{{this._id}}/?_method=DELETE" method="POST"
+              style="height:20px; margin-left:3px;" class="d-inline-flex">
               <button type="submit" class="border border-dark rounded"
                 style=" text-decoration:none;font-size:10px; padding: 0 1px;">刪除</button>
             </form>
