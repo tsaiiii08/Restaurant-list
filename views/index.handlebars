@@ -57,12 +57,12 @@
             </div>
           </div>
           <div class="button-zone d-flex justify-content-end align-items-start" style="height:20px">
-            <a href="./restaurants/{{this._id}}" style="text-decoration:none;font-size:10px; padding: 0 1px;"
+            <a href="/restaurants/{{this._id}}" style="text-decoration:none;font-size:10px; padding: 0 1px;"
               class=" border border-dark rounded">詳細內容</a>
-            <a href="./restaurants/{{this._id}}/edit"
+            <a href="/restaurants/{{this._id}}/edit"
               style="margin-left:3px; text-decoration:none;font-size:10px; padding: 0 1px;"
               class="border border-dark rounded">編輯</a>
-            <form action="./restaurants/{{this._id}}/?_method=DELETE" method="POST"
+            <form action="/restaurants/{{this._id}}/?_method=DELETE" method="POST"
               style="height:20px; margin-left:3px;" class="d-inline-flex">
               <button type="submit" class="border border-dark rounded"
                 style=" text-decoration:none;font-size:10px; padding: 0 1px;">刪除</button>
