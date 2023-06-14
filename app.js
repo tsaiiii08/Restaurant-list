@@ -5,21 +5,8 @@ const methodOverride = require('method-override')
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
-const mongoose = require('mongoose')
-if (process.env.NODE_ENV !== 'produciton') {
-  require('dotenv').config()
-}
-mongoose.connect(process.env.MONGODB_URI)
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('db is on error')
-})
-db.once('open', () => {
-  console.log('db is connected')
-})
-
 const app = express()
+require('./config/mongoose')
 
 //express tamplate engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
