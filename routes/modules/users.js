@@ -45,4 +45,8 @@ router.post('/register', (req, res) => {
     .catch(err => console.log(err))
 })
 
+router.get('/logout', (req, res, next) => {
+  req.logout(err => console.log('err is on logout'))
+  res.redirect('/users/login')
+})
 module.exports = router
