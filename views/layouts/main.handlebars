@@ -11,15 +11,18 @@
 <body>
   <header>
     <!-- navigation -->
-    <nav class="navbar navbar-light bg-light">
-      <div class="container d-flex justify-content-between ">
+    <nav class="navbar navbar-light bg-light" >
+      <div class="container d-flex justify-content-between " style="max-width:2000px;margin:0px;">
         <a class="navbar-brand" href="/">
           <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
             width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-          我的餐廳清單
+          {{#if isAuthenticated}}{{ user.name}}'s {{/if}}餐廳清單
         </a>
-        <a href="/restaurants/new" class="d-inline-block align-top"
-          style="text-decoration:none; color:gray; width:100px;font-size:20px;">新增餐廳</a>
+          {{#if isAuthenticated}}
+          <a href="/users/logout" class="btn" style="margin-left:20px;padding:5px 0px;font-size:20px;text-decoration:none; color:gray;">Logout</a>
+          {{else}}
+          <a href="/users/login" class="btn" style="margin-left:20px;padding:5px 0px;font-size:20px;text-decoration:none; color:gray;">Login</a>
+          {{/if}}
       </div>
     </nav>
   
