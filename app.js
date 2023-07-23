@@ -13,13 +13,14 @@ require('./config/mongoose')
 //express tamplate engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 app.use(session({
   secret: 'ThisIsMySecret',
   resave: false,
   saveUninitialized: true
 }))
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
 usePassport(app)
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use(routes)
-app.use(express.static('public'))
+
 
 // start and listen on the Express server
 app.listen(port, () => {

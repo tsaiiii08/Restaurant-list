@@ -1,13 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/restaurant')
+const restaurant = require('../../models/restaurant')
 
 //瀏覽特定方法排列後的所有餐廳
 router.get('/sort/:sortMethod', (req, res) => {
   const sortMethod = req.params.sortMethod
   let sortSequence = 'asc'
+  const userId = req.user._id   // 變數設定
   if (sortMethod === 'nameAsc') {
-    Restaurant.find()
+    Restaurant.find({ userId })
       .lean()
       .sort({ name: sortSequence })
       .then(restaurants => res.render('index', { restaurants }))
@@ -15,7 +17,7 @@ router.get('/sort/:sortMethod', (req, res) => {
   }
   else if (sortMethod === 'nameDesc') {
     sortSequence = 'desc'
-    Restaurant.find()
+    Restaurant.find({ userId })
       .lean()
       .sort({ name: sortSequence })
       .then(restaurants => res.render('index', { restaurants }))
@@ -23,14 +25,14 @@ router.get('/sort/:sortMethod', (req, res) => {
 
   }
   else if (sortMethod === 'category') {
-    Restaurant.find()
+    Restaurant.find({ userId })
       .lean()
       .sort({ category: sortSequence })
       .then(restaurants => res.render('index', { restaurants }))
       .catch(error => console.log('error is on read all data'))
   }
   else if (sortMethod === 'location') {
-    Restaurant.find()
+    Restaurant.find({ userId })
       .lean()
       .sort({ location: sortSequence })
       .then(restaurants => res.render('index', { restaurants }))
@@ -38,7 +40,7 @@ router.get('/sort/:sortMethod', (req, res) => {
   }
   else if (sortMethod === 'rating') {
     sortSequence = 'desc'
-    Restaurant.find()
+    Restaurant.find({ userId })
       .lean()
       .sort({ rating: sortSequence })
       .then(restaurants => res.render('index', { restaurants }))
@@ -53,7 +55,7 @@ router.get('/new', (req, res) => {
 
 //接收欲新增內容並送往資料庫的路由
 router.post('/', (req, res) => {
-  console.log(req)
+  const userId = req.user._id
   const image = req.body.image
   const name = req.body.name
   const category = req.body.category
@@ -71,6 +73,7 @@ router.post('/', (req, res) => {
     google_map: google_map,
     phone: phone,
     description: description,
+    userId: userId
   })
     .then(() => res.redirect('/'))
     .catch(error => console.log('error is on add data'))
@@ -78,8 +81,9 @@ router.post('/', (req, res) => {
 
 //瀏覽特定餐廳細節
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant) => res.render('show', { restaurant }))
     .catch(error => console.log('error is on read specific data'))
@@ -87,15 +91,17 @@ router.get('/:id', (req, res) => {
 
 //瀏覽編輯頁面
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ _id, userId })
     .lean()
     .then((restaurant) => res.render('edit', { restaurant }))
     .catch(error => console.log('error is on read specific data for edit'))
 })
 //編輯餐廳內容
 router.put('/:id', (req, res) => {
-  const id = req.params.id
+  const userId = req.user._id
+  const _id = req.params.id
   const image = req.body.image
   const name = req.body.name
   const category = req.body.category
@@ -104,7 +110,7 @@ router.put('/:id', (req, res) => {
   const google_map = req.body.google_map
   const phone = req.body.phone
   const description = req.body.description
-  return Restaurant.findById(id)
+  return Restaurant.findOne({ _id, userId })
     .then(restaurant => {
       restaurant.image = image
       restaurant.name = name
@@ -116,17 +122,17 @@ router.put('/:id', (req, res) => {
       restaurant.description = description
       return restaurant.save()
     })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(error => console.log('error is on edit data'))
 })
 
 // 刪除餐廳
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findByIdAndRemove(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOneAndDelete({ _id, userId })
     .then(() => res.redirect('/'))
     .catch(error => console.log('error is on delete data'))
-
 })
 
 module.exports = router

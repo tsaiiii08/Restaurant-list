@@ -19,9 +19,13 @@
           {{#if isAuthenticated}}{{ user.name}}'s {{/if}}餐廳清單
         </a>
           {{#if isAuthenticated}}
-          <a href="/users/logout" class="btn" style="margin-left:20px;padding:5px 0px;font-size:20px;text-decoration:none; color:gray;">Logout</a>
+          <div class="d-flex">
+            <a href="/restaurants/new" class="d-inline-block"
+              style="text-decoration:none; color:gray; width:100px;font-size:20px; text-align: center; padding:5px 0px">新增餐廳</a>
+            <a href="/users/logout" class="btn" style="margin-left:20px;border:0px;padding:5px 0px;font-size:20px;text-decoration:none; color:gray;">登出</a>
+          </div>
           {{else}}
-          <a href="/users/login" class="btn" style="margin-left:20px;padding:5px 0px;font-size:20px;text-decoration:none; color:gray;">Login</a>
+          <a href="/users/login" class="btn" style="margin-left:20px;border:0px;padding:5px 0px;font-size:20px;text-decoration:none; color:gray;">登入</a>
           {{/if}}
       </div>
     </nav>
