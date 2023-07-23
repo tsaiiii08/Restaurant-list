@@ -60,15 +60,12 @@ router.post('/register', (req, res) => {
   })
 })
 
-router.get('/logout', (req, res) => {
-  req.logout(err => {
-    if(err){
-    console.log('err is on logout')
-    }
+router.get("/logout", (req, res) => {
+  req.logout(req.user, (err) => {
+    if (err) return next(err);
+    req.flash("success_msg", "成功登出!");
+    res.redirect("/users/login");
   })
-  req.flash('success_msg', '你已經成功登出。')
-  res.redirect('/users/login')
 })
-
 
 module.exports = router
