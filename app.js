@@ -1,10 +1,13 @@
 const express = require('express')
+const port = process.env.PORT || 3000
 const session = require('express-session')
 const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
-const port = 3000
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const Restaurant = require('./models/restaurant')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
@@ -18,7 +21,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -29,9 +32,7 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
   res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
-  console.log(res.locals.success_msg)
   res.locals.warning_msg = req.flash('warning_msg')  // 設定 warning_msg 訊息
-  console.log(res.locals.warning_msg)
   next()
 })
 
