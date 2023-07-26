@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/restaurant')
-const restaurant = require('../../models/restaurant')
 
-//瀏覽特定方法排列後的所有餐廳
+//瀏覽特定方法排列後的餐廳
 router.get('/sort/:sortMethod', (req, res) => {
   const sortMethod = req.params.sortMethod
   let sortSequence = 'asc'

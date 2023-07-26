@@ -14,8 +14,8 @@ router.get('/', (req, res) => {
 
 //搜尋餐廳
 router.get('/search', (req, res) => {
-  console.log(req.query.keyword)
-  Restaurant.find()
+  const userId = req.user._id
+  Restaurant.find({ userId })
     .lean()
     .then(restaurants_all => restaurants_all.filter(function (restaurant) {
       const restaurants = restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase())
